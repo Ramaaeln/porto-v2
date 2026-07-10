@@ -17,8 +17,17 @@ export default function ContactSection() {
   const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (messages.length > 0 && !loading) {
+      const contactSection = document.getElementById("contact");
+      if (contactSection) {
+        const rect = contactSection.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
+        if (isVisible) {
+          scrollToBottom();
+        }
+      }
+    }
+  }, [messages, loading]);
 
   useEffect(() => {
     let channel;
@@ -26,6 +35,7 @@ export default function ContactSection() {
       setLoading(true);
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user ?? null);
+      
       if (session?.user) {
         const { data } = await supabase.from("profiles").select("*").eq("id", session.user.id).maybeSingle();
         setProfile(data);
@@ -40,8 +50,10 @@ export default function ContactSection() {
           setMessages((prev) => [...prev, payload.new]);
         })
         .subscribe();
+      
       setLoading(false);
     };
+    
     initialize();
     return () => { if (channel) supabase.removeChannel(channel); };
   }, []);
@@ -145,7 +157,7 @@ export default function ContactSection() {
                   return (
                     <motion.div key={m.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
                       <div className={`flex gap-3 max-w-[80%] ${mine ? "flex-row-reverse" : ""}`}>
-                        <img src={m.user_avatar || `https://ui-avatars.com/api/?name=${m.user_name}&background=6366f1&color=fff`} className="w-9 h-9 border-2 border-zinc-950 dark:border-zinc-700 rounded-none object-cover shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-none" alt="avatar" />
+                        <img src={m.user_avatar || `https://ui-avatars.com/api/?name=${m.user_name}&background=6366f1&color=fff`} className=" w-9 h-9 border-2 border-zinc-950 dark:border-zinc-700 rounded-none object-cover shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-none" alt="avatar" />
                         
                         <div className="flex flex-col gap-1.5">
                           <div className={`flex items-center gap-2 select-none ${mine ? "flex-row-reverse" : ""}`}>
