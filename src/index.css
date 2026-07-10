@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
+
+@media (pointer: fine) {
+  html, body, #root, a, button, input, select, textarea {
+    cursor: none !important;
+  }
+}
