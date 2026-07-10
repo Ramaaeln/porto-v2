@@ -3,6 +3,11 @@ import CustomCursor from './components/ui/CustomCursor'
 import Navbar from './components/ui/Navbar'
 import HeroSection from './components/sections/HeroSection'
 import AboutSection from './components/sections/AboutSection'
+import SkillsSection from './components/sections/SkillsSection'
+import ProjectsSection from './components/sections/ProjectsSection'
+import ContactSection from './components/sections/ContactSection'
+import FavoriteSection from './components/sections/FavoritesSection'
+import Footer from './components/sections/FooterSection'
 
 export default function App() {
   const [isDark, setIsDark] = useState(() => {
@@ -36,6 +41,11 @@ export default function App() {
       
       <HeroSection />
       <AboutSection/>
+      <SkillsSection/>
+      <ProjectsSection/>
+      <FavoriteSection/>
+      <ContactSection/>
+      <Footer/>
     </div>
   )
 }

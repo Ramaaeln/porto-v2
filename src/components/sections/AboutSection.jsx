@@ -1,17 +1,27 @@
-import { useState, useEffect } from 'react'
-import { Terminal, User, Heart, Shield, Sparkles, GitBranch } from 'lucide-react'
+import { useState } from 'react'
+import { Terminal, User, Sparkles, Code, Cpu, Smartphone } from 'lucide-react'
 import Profile from '../../assets/profiles/profile.png'
+import 'remixicon/fonts/remixicon.css'
 
 export default function AboutSection() {
   const [isMinimized, setIsMinimized] = useState(false)
-  const [cacheKey, setCacheKey] = useState('')
 
-  useEffect(() => {
-    setCacheKey(new Date().getTime().toString())
-  }, [])
+  const techTags = ['React.js', 'Next.js', 'Node.js', 'Supabase', 'Flutter', 'Kotlin', 'Figma']
 
   return (
-    <section id="about" className="relative w-full min-h-screen flex flex-col items-center justify-center bg-[#fafafa] dark:bg-[#0c0c0e] transition-colors duration-500 p-6 md:p-12 overflow-hidden selection:bg-indigo-500/30">
+    <section id="about" className="relative w-full min-h-screen flex flex-col items-center justify-center bg-[#fafafa] dark:bg-[#0c0c0e] transition-colors duration-500 pt-22 p-6 md:p-12 overflow-hidden selection:bg-indigo-500/30">
+      
+      <div className="absolute inset-0 opacity-[0.4] dark:opacity-[0.25] pointer-events-none select-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(99, 102, 241, 0.08) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(99, 102, 241, 0.08) 1px, transparent 1px)
+          `,
+          backgroundSize: '32px 32px'
+        }} 
+      />
+
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-500/5 dark:bg-indigo-500/[0.02] blur-[120px] rounded-full pointer-events-none select-none" />
       
       <div className="absolute top-[20%] left-[8%] font-mono text-[30px] opacity-[0.03] dark:opacity-[0.02] text-zinc-950 dark:text-white select-none pointer-events-none">＋</div>
       <div className="absolute bottom-[30%] right-[10%] font-mono text-[40px] opacity-[0.03] dark:opacity-[0.02] text-zinc-950 dark:text-white select-none pointer-events-none">■</div>
@@ -42,28 +52,71 @@ export default function AboutSection() {
                 <div className="absolute inset-0 border-2 border-transparent group-hover:border-indigo-500/30 transition-colors pointer-events-none" />
               </div>
               
-              <div className="text-center border-t-2 border-zinc-950 dark:border-zinc-800 pt-3 space-y-3">
-                <p className="font-mono font-bold text-[10px] sm:text-xs uppercase tracking-wider text-zinc-950 dark:text-zinc-50 break-words">
-                  ABDULLAH RAMADAN ELANSARY
-                </p>
+              <div className="text-center border-t-2 border-zinc-950 dark:border-zinc-800 pt-3 space-y-4">
+                <div className="space-y-2">
+                  <p className="font-mono font-bold text-[10px] sm:text-xs uppercase tracking-wider text-zinc-950 dark:text-zinc-50 break-words">
+                    ABDULLAH RAMADAN ELANSARY
+                  </p>
+                  
+                  <div className="flex flex-wrap justify-center gap-2 pt-1">
+                    <a 
+                      href="https://github.com/Ramaaeln" 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="p-1.5 border-2 border-zinc-950 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)] hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-500 dark:hover:text-white hover:-translate-y-0.5 transition-all flex items-center justify-center text-base"
+                    >
+                      <i className="ri-github-fill"></i>
+                    </a>
+                    <a 
+                      href="https://www.linkedin.com/in/ramaelansary/" 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="p-1.5 border-2 border-zinc-950 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)] hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-500 dark:hover:text-white hover:-translate-y-0.5 transition-all flex items-center justify-center text-base"
+                    >
+                      <i className="ri-linkedin-box-fill"></i>
+                    </a>
+                    <a 
+                      href="https://instagram.com/ramdneln" 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="p-1.5 border-2 border-zinc-950 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)] hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-500 dark:hover:text-white hover:-translate-y-0.5 transition-all flex items-center justify-center text-base"
+                    >
+                      <i className="ri-instagram-line"></i>
+                    </a>
+                    <a 
+                      href="https://tiktok.com/@ramadan.eln" 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="p-1.5 border-2 border-zinc-950 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)] hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-500 dark:hover:text-white hover:-translate-y-0.5 transition-all flex items-center justify-center text-base"
+                    >
+                      <i className="ri-tiktok-fill"></i>
+                    </a>
+                    <a 
+                      href="mailto:abdullahramadanelansary@gmail.com"
+                      className="p-1.5 border-2 border-zinc-950 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)] hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-500 dark:hover:text-white hover:-translate-y-0.5 transition-all flex items-center justify-center text-base"
+                    >
+                      <i className="ri-mail-line"></i>
+                    </a>
+                  </div>
+                </div>
 
-                <div className="space-y-3 pt-1">
+                <div className="space-y-3 pt-2 border-t border-dashed border-zinc-200 dark:border-zinc-800">
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between text-[9px] font-mono font-bold tracking-wider uppercase text-zinc-500 dark:text-zinc-400">
                       <span className="flex items-center gap-1">
-                        <Heart className="w-3 h-3 text-rose-500 fill-current" /> NEXT.JS / REACT
+                        <Code className="w-3 h-3 text-rose-500" /> FRONTEND INTERMEDIATE
                       </span>
-                      <span className="text-rose-500 dark:text-rose-400">100%</span>
+                      <span className="text-rose-500 dark:text-rose-400">95%</span>
                     </div>
                     <div className="w-full h-3 bg-zinc-200 dark:bg-zinc-800 border-2 border-zinc-950 dark:border-zinc-700 p-[1px]">
-                      <div className="h-full bg-rose-500 w-full" />
+                      <div className="h-full bg-rose-500 w-[95%]" />
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between text-[9px] font-mono font-bold tracking-wider uppercase text-zinc-500 dark:text-zinc-400">
                       <span className="flex items-center gap-1">
-                        <Shield className="w-3 h-3 text-indigo-500 fill-current" /> NODE / AI INT.
+                        <Cpu className="w-3 h-3 text-indigo-500" /> BACKEND INTERMEDIATE
                       </span>
                       <span className="text-indigo-500 dark:text-indigo-400">85%</span>
                     </div>
@@ -71,6 +124,38 @@ export default function AboutSection() {
                       <div className="h-full bg-indigo-500 w-[85%]" />
                     </div>
                   </div>
+
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between text-[9px] font-mono font-bold tracking-wider uppercase text-zinc-500 dark:text-zinc-400">
+                      <span className="flex items-center gap-1">
+                        <Smartphone className="w-3 h-3 text-emerald-500" /> MOBILE FAMILIAR
+                      </span>
+                      <span className="text-emerald-500 dark:text-emerald-400">50%</span>
+                    </div>
+                    <div className="w-full h-3 bg-zinc-200 dark:bg-zinc-800 border-2 border-zinc-950 dark:border-zinc-700 p-[1px]">
+                      <div className="h-full bg-emerald-500 w-[50%]" />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between text-[9px] font-mono font-bold tracking-wider uppercase text-zinc-500 dark:text-zinc-400">
+                      <span className="flex items-center gap-1">
+                        <i className="ri-figma-line text-[11px] text-amber-500 leading-none"></i> FIGMA (UI/UX) FAMILIAR
+                      </span>
+                      <span className="text-amber-500 dark:text-amber-400">50%</span>
+                    </div>
+                    <div className="w-full h-3 bg-zinc-200 dark:bg-zinc-800 border-2 border-zinc-950 dark:border-zinc-700 p-[1px]">
+                      <div className="h-full bg-amber-500 w-[50%]" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-1.5 pt-2 border-t border-dashed border-zinc-200 dark:border-zinc-800 justify-center select-none">
+                  {techTags.map((tech) => (
+                    <span key={tech} className="font-mono text-[9px] font-bold uppercase tracking-wider bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2 py-0.5 border border-zinc-300 dark:border-zinc-700">
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -96,13 +181,13 @@ export default function AboutSection() {
               
               <div className={`p-6 font-mono text-xs sm:text-sm leading-relaxed text-zinc-700 dark:text-zinc-300 space-y-4 transition-all duration-300 ${isMinimized ? 'h-0 py-0 overflow-hidden opacity-0' : 'opacity-100'}`}>
                 <p>
-                  &gt; I am an Informatics Engineering student currently focused on exploring the horizons of software architecture, full-stack ecosystems, and intelligence integration.
+                  &gt; I am an Informatics Engineering student at Universitas Pamulang, highly focused on engineering scalable web architectures, full-stack ecosystems, and interactive intelligence integrations.
                 </p>
                 <p>
-                  &gt; My engineering philosophy revolves around building robust, strictly typed web applications and interactive pixel-perfect interfaces that strike a balance between structural efficiency and nostalgic retro aesthetics.
+                  &gt; My development workflow heavily revolves around building strictly typed production engines, modular infrastructure, and performance-driven mobile solutions that balance modern speed with clean retro aesthetics.
                 </p>
                 <p>
-                  &gt; Beyond writing standard logic, I actively deep dive into bridge-building between classic backend structures and custom modern AI pipelines, constantly seeking clean ways to solve contextual problems.
+                  &gt; Driven by building tools that work in the real world, I actively engineer bridges between reactive interfaces, custom backend pipelines, and interactive database structures like Supabase to solve technical problems efficiently.
                 </p>
               </div>
             </div>
@@ -113,7 +198,7 @@ export default function AboutSection() {
                   <Sparkles className="w-3.5 h-3.5 fill-current" /> Core Focus
                 </h4>
                 <p className="font-mono text-xs text-zinc-600 dark:text-zinc-400 leading-normal">
-                  Architecting scalable web engines, creating modular components, and writing reliable automated integrations.
+                  Architecting robust enterprise systems, secure real-time activity tracking modules, and end-to-end data pipelines.
                 </p>
               </div>
 
@@ -122,23 +207,8 @@ export default function AboutSection() {
                   <span>■</span> Current Status
                 </h4>
                 <p className="font-mono text-xs text-zinc-600 dark:text-zinc-400 leading-normal">
-                  Open for technical collaboration, digital product engineering, and advanced stack optimization workflows.
+                  Open for software engineering internships, technical collaborations, and building specialized digital products.
                 </p>
-              </div>
-            </div>
-
-            <div className="w-full bg-white dark:bg-zinc-900 border-4 border-zinc-950 dark:border-zinc-800 p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
-              <h4 className="font-mono font-bold text-xs text-zinc-950 dark:text-zinc-50 uppercase tracking-widest mb-3 flex items-center gap-2 border-b-2 border-dashed border-zinc-200 dark:border-zinc-800 pb-2">
-                <GitBranch className="w-4 h-4 text-indigo-500 animate-pulse" /> GitHub Engine Status
-              </h4>
-              <div className="w-full overflow-hidden flex items-center justify-center p-2 bg-zinc-950 border-2 border-zinc-800 rounded-none min-h-[120px]">
-                {cacheKey && (
-                  <img 
-                    src={`https://github-readme-stats.vercel.app/api?username=Ramaaeln&show_icons=true&theme=dark&hide_border=true&bg_color=0c0c0e&title_color=6366f1&icon_color=10b981&text_color=a1a1aa&cache_seconds=60&t=${cacheKey}`} 
-                    alt="GitHub Stats"
-                    className="w-full max-w-md h-auto object-contain filter select-none pointer-events-none"
-                  />
-                )}
               </div>
             </div>
 

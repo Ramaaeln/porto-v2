@@ -43,7 +43,7 @@ export default function HeroSection() {
   ]
 
   return (
-    <section className="relative w-full h-screen flex flex-col items-center justify-between overflow-hidden bg-[#fafafa] dark:bg-[#0c0c0e] transition-colors duration-500 p-6 md:p-12 selection:bg-indigo-500/30 selection:text-zinc-900 dark:selection:text-zinc-100">
+    <section id="home" className="relative w-full h-screen flex flex-col items-center justify-between overflow-hidden bg-[#fafafa] dark:bg-[#0c0c0e] transition-colors duration-500 p-6 md:p-12 selection:bg-indigo-500/30 selection:text-zinc-900 dark:selection:text-zinc-100">
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
@@ -69,7 +69,7 @@ export default function HeroSection() {
       <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-indigo-500/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-purple-500/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="w-full flex flex-col items-center text-center mt-12 md:mt-24 z-30 space-y-6 select-none">
+      <div className="w-full flex flex-col items-center text-center mt-28 md:mt-24 z-30 space-y-6 select-none">
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-zinc-700 dark:text-zinc-300 font-mono uppercase">
           Hi, u can call me <span className="text-indigo-500 dark:text-indigo-400 bg-indigo-500/5 dark:bg-indigo-400/5 px-3 py-1 rounded-none border-2 border-dashed border-indigo-500/20">RAMAAA</span>
         </h1>

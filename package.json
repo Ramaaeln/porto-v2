@@ -10,11 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.110.2",
     "@tailwindcss/vite": "^4.3.2",
     "framer-motion": "^12.42.2",
     "lucide-react": "^1.23.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-github-calendar": "^5.0.6",
+    "remixicon": "^4.9.1",
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
