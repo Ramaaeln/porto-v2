@@ -37,7 +37,62 @@
     </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="fallback-loader" style="
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #0a0a0c;
+        color: #fafafa;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        user-select: none;
+        -webkit-user-select: none;
+      ">
+        <div style="
+          border: 4px solid #18181b;
+          background-color: #18181b;
+          padding: 16px 24px;
+          box-shadow: 6px 6px 0px 0px #000000;
+          text-align: center;
+          image-rendering: pixelated;
+        ">
+          <div style="margin-bottom: 12px; font-weight: 800; color: #34d399;">
+            &gt; INITIATING_SYSTEM...
+          </div>
+          <div style="
+            width: 160px;
+            height: 12px;
+            background-color: #09090b;
+            border: 2px solid #fafafa;
+            padding: 1px;
+            position: relative;
+            overflow: hidden;
+          ">
+            <div style="
+              width: 35%;
+              height: 100%;
+              background-color: #6366f1;
+              animation: pulse-loading 1.5s infinite linear;
+            "></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      @keyframes pulse-loading {
+        0% { opacity: 0.4; transform: translateX(-20%); }
+        50% { opacity: 1; transform: translateX(120%); }
+        100% { opacity: 0.4; transform: translateX(-20%); }
+      }
+    </style>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

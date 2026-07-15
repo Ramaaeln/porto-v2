@@ -1,8 +1,48 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Code, Cpu, Smartphone, Wrench, Terminal } from 'lucide-react'
+import { motion } from 'framer-motion'
+
+function SkillsSkeleton() {
+  return (
+    <div className="space-y-4 sm:space-y-8 select-none pointer-events-none">
+      {[1, 2].map((box) => (
+        <div 
+          key={box}
+          className="bg-white dark:bg-zinc-900 border-2 sm:border-4 border-zinc-950 dark:border-zinc-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]"
+        >
+          <div className="bg-zinc-950 dark:bg-zinc-800 px-3 py-2 sm:px-4 sm:py-2.5 flex items-center justify-between border-b-2 sm:border-b-4 border-zinc-950">
+            <div className="h-3.5 bg-zinc-700 rounded-none w-32" />
+          </div>
+
+          <motion.div 
+            animate={{ opacity: [0.35, 0.85, 0.35] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "linear", delay: box * 0.15 }}
+            className="p-3 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6"
+          >
+            {[1, 2, 3, 4].map((item) => (
+              <div key={item} className="flex md:flex-col justify-between items-center md:items-stretch gap-2 p-2.5 md:p-0 border-2 md:border-0 border-dashed border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 md:bg-transparent">
+                <div className="flex items-center justify-between w-full">
+                  <div className="h-3 bg-zinc-300 dark:bg-zinc-800 w-24 rounded-none" />
+                  <div className="h-4 bg-zinc-200 dark:bg-zinc-800 w-14 border border-zinc-300 dark:border-zinc-700" />
+                </div>
+                <div className="hidden md:block w-full h-4 bg-zinc-100 dark:bg-zinc-950 border-2 border-zinc-950 dark:border-zinc-800 p-[1px]" />
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function SkillsSection() {
   const [activeCategory, setActiveCategory] = useState('all')
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 850)
+    return () => clearTimeout(timer)
+  }, [])
 
   const skillCategories = [
     { id: 'all', name: '00 . ALL' },
@@ -101,48 +141,52 @@ export default function SkillsSection() {
           ))}
         </div>
 
-        <div className="space-y-4 sm:space-y-8">
-          {Object.keys(groupedSkills).map((categoryKey) => {
-            const { title, icon } = getCategoryHeader(categoryKey)
-            return (
-              <div 
-                key={categoryKey}
-                className="bg-white dark:bg-zinc-900 border-2 sm:border-4 border-zinc-950 dark:border-zinc-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] transition-all"
-              >
-                <div className="bg-zinc-950 dark:bg-zinc-800 px-3 py-2 sm:px-4 sm:py-2.5 flex items-center gap-2 border-b-2 sm:border-b-4 border-zinc-950 select-none">
-                  {icon}
-                  <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white">
-                    {title}.sh
-                  </span>
-                </div>
+        {loading ? (
+          <SkillsSkeleton />
+        ) : (
+          <div className="space-y-4 sm:space-y-8">
+            {Object.keys(groupedSkills).map((categoryKey) => {
+              const { title, icon } = getCategoryHeader(categoryKey)
+              return (
+                <div 
+                  key={categoryKey}
+                  className="bg-white dark:bg-zinc-900 border-2 sm:border-4 border-zinc-950 dark:border-zinc-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] transition-all"
+                >
+                  <div className="bg-zinc-950 dark:bg-zinc-800 px-3 py-2 sm:px-4 sm:py-2.5 flex items-center gap-2 border-b-2 sm:border-b-4 border-zinc-950 select-none">
+                    {icon}
+                    <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white">
+                      {title}.sh
+                    </span>
+                  </div>
 
-                <div className="p-3 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">
-                  {groupedSkills[categoryKey].map((skill) => (
-                    <div key={skill.name} className="flex md:flex-col justify-between items-center md:items-stretch gap-2 p-2.5 md:p-0 border-2 md:border-0 border-dashed border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 md:bg-transparent dark:bg-zinc-950/20 md:dark:bg-transparent group">
-                      
-                      <div className="flex items-center justify-between font-mono text-xs font-bold tracking-wide uppercase text-zinc-700 dark:text-zinc-300 w-full">
-                        <span className="flex items-center gap-2">
-                          <i className={`${skill.icon} text-sm text-indigo-500 dark:text-indigo-400 group-hover:scale-110 transition-transform`}></i>
-                          {skill.name}
-                        </span>
-                        <span className={`font-bold px-1.5 py-0.5 border text-[9px] ${getTierBadgeStyle(skill.tier)}`}>
-                          {skill.tier}
-                        </span>
+                  <div className="p-3 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">
+                    {groupedSkills[categoryKey].map((skill) => (
+                      <div key={skill.name} className="flex md:flex-col justify-between items-center md:items-stretch gap-2 p-2.5 md:p-0 border-2 md:border-0 border-dashed border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 md:bg-transparent dark:bg-zinc-950/20 md:dark:bg-transparent group">
+                        
+                        <div className="flex items-center justify-between font-mono text-xs font-bold tracking-wide uppercase text-zinc-700 dark:text-zinc-300 w-full">
+                          <span className="flex items-center gap-2">
+                            <i className={`${skill.icon} text-sm text-indigo-500 dark:text-indigo-400 group-hover:scale-110 transition-transform`}></i>
+                            {skill.name}
+                          </span>
+                          <span className={`font-bold px-1.5 py-0.5 border text-[9px] ${getTierBadgeStyle(skill.tier)}`}>
+                            {skill.tier}
+                          </span>
+                        </div>
+
+                        <div className="hidden md:block w-full h-4 bg-zinc-100 dark:bg-zinc-950 border-2 border-zinc-950 dark:border-zinc-800 p-[1px] rounded-none relative">
+                          <div 
+                            className={`h-full bg-indigo-500 dark:bg-indigo-500 transition-all duration-1000 ease-out ${skill.width}`}
+                          />
+                        </div>
+
                       </div>
-
-                      <div className="hidden md:block w-full h-4 bg-zinc-100 dark:bg-zinc-950 border-2 border-zinc-950 dark:border-zinc-800 p-[1px] rounded-none relative">
-                        <div 
-                          className={`h-full bg-indigo-500 dark:bg-indigo-500 transition-all duration-1000 ease-out ${skill.width}`}
-                        />
-                      </div>
-
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )
-          })}
-        </div>
+              )
+            })}
+          </div>
+        )}
 
       </div>
     </section>

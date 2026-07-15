@@ -4,6 +4,39 @@ import { Terminal, Send, MessageSquare, Loader2, LogOut, LogIn, ShieldAlert, Cpu
 import { motion, AnimatePresence } from "framer-motion";
 import "remixicon/fonts/remixicon.css";
 
+// Komponen Pembantu: Shimmering Skeleton Loading untuk RAMA.EXE Chat Stream
+function ChatSkeleton() {
+  return (
+    <div className="space-y-4 sm:space-y-6 select-none pointer-events-none">
+      {[1, 2, 3].map((n) => (
+        <div key={n} className={`flex ${n % 2 === 0 ? "justify-end" : "justify-start"}`}>
+          <motion.div 
+            animate={{ opacity: [0.35, 0.85, 0.35] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: n * 0.2 }}
+            className={`flex gap-2 sm:gap-3 w-[85%] sm:max-w-[75%] items-start ${n % 2 === 0 ? "flex-row-reverse" : ""}`}
+          >
+            {/* Avatar Skeleton */}
+            <div className="w-6 h-6 sm:w-9 sm:h-9 bg-zinc-300 dark:bg-zinc-800 border-[1px] sm:border-2 border-zinc-400 dark:border-zinc-700 shrink-0 mt-0.5" />
+            
+            {/* Meta & Bubble Text Box */}
+            <div className="flex flex-col gap-1 w-full min-w-0">
+              <div className={`flex items-center gap-1.5 ${n % 2 === 0 ? "flex-row-reverse" : ""}`}>
+                <div className="h-3 w-16 bg-zinc-300 dark:bg-zinc-800 rounded-sm" />
+                <div className="h-3.5 w-10 bg-indigo-500/10 dark:bg-indigo-400/10 border border-zinc-300 dark:border-zinc-700 text-[6px]" />
+              </div>
+              
+              <div className="p-2 sm:p-3 bg-white dark:bg-zinc-900 border-2 border-zinc-300 dark:border-zinc-800 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.05)] dark:shadow-none space-y-1.5">
+                <div className="h-3 bg-zinc-300 dark:bg-zinc-800 rounded-sm w-full" />
+                <div className="h-3 bg-zinc-200 dark:bg-zinc-800 rounded-sm w-[70%]" />
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function ContactSection() {
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
@@ -38,36 +71,30 @@ export default function ContactSection() {
     }
   }, [messages, loading]);
 
-useEffect(() => {
+  useEffect(() => {
     let channel = null;
-    let ignore = false; // Bendera untuk menangani StrictMode / double-render
-
+    let ignore = false; 
     const initialize = async () => {
       setLoading(true);
       try {
-        // 1. Ambil Session User
         const { data: { session } } = await supabase.auth.getSession();
         if (ignore) return;
         setUser(session?.user ?? null);
         
-        // 2. Ambil Profile User (Jika sudah login)
         if (session?.user) {
           const { data } = await supabase.from("profiles").select("*").eq("id", session.user.id).maybeSingle();
           if (ignore) return;
           setProfile(data);
         }
         
-        // 3. Ambil List Email Developer
         const { data: devs } = await supabase.from("profiles").select("email").eq("role", "developer");
         if (ignore) return;
         if (devs) setDeveloperEmails(devs.map((d) => d.email));
         
-        // 4. Ambil History Chat
         const { data: msgs } = await supabase.from("messages").select("*").order("created_at", { ascending: true });
         if (ignore) return;
         if (msgs) setMessages(msgs);
         
-        // 5. Setup Realtime Channel (Hanya dibuat jika render ini masih valid)
         const chatChannel = supabase.channel("public-chat")
           .on(
             "postgres_changes",
@@ -95,9 +122,8 @@ useEffect(() => {
     
     initialize();
 
-    // Fungsi Pembersihan (Cleanup): Dipanggil secara instan oleh StrictMode saat re-render
     return () => {
-      ignore = true; // Batalkan semua proses state update dari fetch yang sedang berjalan
+      ignore = true; 
       if (channel) {
         supabase.removeChannel(channel);
       }
@@ -200,10 +226,7 @@ useEffect(() => {
 
           <div className="h-[340px] sm:h-[420px] overflow-y-auto bg-zinc-50/30 dark:bg-black/20 p-3 sm:p-6 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-thumb-zinc-300 dark:scrollbar-thumb-zinc-700">
             {loading ? (
-              <div className="h-full flex flex-col items-center justify-center text-indigo-500 space-y-2 select-none font-mono text-xs font-bold uppercase">
-                <Loader2 className="animate-spin w-6 h-6" />
-                <span className="tracking-wider opacity-80 text-[10px]">Fetching logs...</span>
-              </div>
+              <ChatSkeleton />
             ) : (
               <AnimatePresence initial={false}>
                 {messages.map((m) => {

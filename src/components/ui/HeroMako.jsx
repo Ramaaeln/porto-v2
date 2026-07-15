@@ -17,7 +17,7 @@ export default function HeroMako() {
   const rightEye = useRef(null)
 
   const eyesState = useRef({
-    pointer: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
+    pointer: { x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0, y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0 },
     isLeftWindow: false,
     left: { current: { x: 0, y: 0 }, velocity: { x: 0, y: 0 }, target: { x: 0, y: 0 } },
     right: { current: { x: 0, y: 0 }, velocity: { x: 0, y: 0 }, target: { x: 0, y: 0 } }

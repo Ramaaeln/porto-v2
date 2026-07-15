@@ -17,6 +17,7 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-github-calendar": "^5.0.6",
+    "react-intersection-observer": "^10.1.0",
     "remixicon": "^4.9.1",
     "tailwindcss": "^4.3.2"
   },

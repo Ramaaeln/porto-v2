@@ -1,8 +1,39 @@
 import { useState, useEffect } from 'react'
 import { Code2, Terminal, Layers, Database, Cpu, Globe, Zap, Flame, ArrowDown } from 'lucide-react'
+import { motion } from 'framer-motion'
 import HeroMako from '../ui/HeroMako'
 
+function HeroSkeleton() {
+  return (
+    <div className="relative w-full h-screen flex flex-col items-center justify-between p-6 md:p-12 overflow-hidden select-none pointer-events-none">
+      <div className="w-full flex flex-col items-center text-center mt-28 md:mt-24 space-y-6">
+        <motion.div 
+          animate={{ opacity: [0.35, 0.85, 0.35] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+          className="h-12 bg-zinc-200 dark:bg-zinc-800 border-4 border-zinc-950 dark:border-zinc-800 w-3/4 max-w-xl" 
+        />
+        <div className="h-10 bg-zinc-300 dark:bg-zinc-800 border-4 border-zinc-950 dark:border-zinc-800 w-48 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]" />
+      </div>
+
+      <div className="relative w-full flex items-center justify-center my-auto py-12">
+        <motion.div 
+          animate={{ opacity: [0.2, 0.6, 0.2] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "linear", delay: 0.2 }}
+          className="w-48 h-48 bg-zinc-200 dark:bg-zinc-800 border-4 border-zinc-950 dark:border-zinc-800 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]" 
+        />
+      </div>
+
+      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t-2 border-dashed border-zinc-200 dark:border-zinc-800/40 pt-6">
+        <div className="h-3 bg-zinc-200 dark:bg-zinc-800 w-32" />
+        <div className="h-8 bg-zinc-300 dark:bg-zinc-800 border-2 border-zinc-950 w-36 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]" />
+        <div className="h-3 bg-zinc-200 dark:bg-zinc-800 w-44 hidden md:block" />
+      </div>
+    </div>
+  )
+}
+
 export default function HeroSection() {
+  const [loading, setLoading] = useState(true)
   const roles = ['Full Stack Web Developer', 'Software Engineer', 'AI Integrator']
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0)
   const [currentText, setCurrentText] = useState('')
@@ -10,6 +41,13 @@ export default function HeroSection() {
   const [typingSpeed, setTypingSpeed] = useState(100)
 
   useEffect(() => {
+    const loaderTimer = setTimeout(() => setLoading(false), 700)
+    return () => clearTimeout(loaderTimer)
+  }, [])
+
+  useEffect(() => {
+    if (loading) return
+
     const handleTyping = () => {
       const fullText = roles[currentRoleIndex]
       if (!isDeleting) {
@@ -29,7 +67,7 @@ export default function HeroSection() {
     }
     const timer = setTimeout(handleTyping, typingSpeed)
     return () => clearTimeout(timer)
-  }, [currentText, isDeleting, currentRoleIndex])
+  }, [currentText, isDeleting, currentRoleIndex, loading])
 
   const floatingIcons = [
     { Icon: Code2, label: 'React', pos: 'top-[12%] left-[8%] md:top-[15%] md:left-[12%]', anim: 'animate-[float_4s_infinite_ease-in-out]' },
@@ -41,6 +79,24 @@ export default function HeroSection() {
     { Icon: Globe, label: 'JavaScript', pos: 'top-[45%] right-[4%] md:top-[48%] md:right-[15%]', anim: 'animate-[float_5.2s_infinite_ease-in-out_0.5s]' },
     { Icon: Flame, label: 'Postman', pos: 'bottom-[16%] right-[8%] md:bottom-[20%] md:right-[18%]', anim: 'animate-[float_4.2s_infinite_ease-in-out_0.7s]' },
   ]
+
+  if (loading) {
+    return (
+      <div className="relative w-full h-screen bg-[#fafafa] dark:bg-[#0c0c0e] transition-colors duration-500">
+        <style>{`
+          .pixel-grid {
+            background-size: 24px 24px;
+            background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+          }
+          .dark .pixel-grid {
+            background-image: linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px);
+          }
+        `}</style>
+        <div className="absolute inset-0 pixel-grid pointer-events-none" />
+        <HeroSkeleton />
+      </div>
+    )
+  }
 
   return (
     <section id="home" className="relative w-full h-screen flex flex-col items-center justify-between overflow-hidden bg-[#fafafa] dark:bg-[#0c0c0e] transition-colors duration-500 p-6 md:p-12 selection:bg-indigo-500/30 selection:text-zinc-900 dark:selection:text-zinc-100">
