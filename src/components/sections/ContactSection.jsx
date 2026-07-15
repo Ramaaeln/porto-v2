@@ -38,33 +38,70 @@ export default function ContactSection() {
     }
   }, [messages, loading]);
 
-  useEffect(() => {
-    let channel;
+useEffect(() => {
+    let channel = null;
+    let ignore = false; // Bendera untuk menangani StrictMode / double-render
+
     const initialize = async () => {
       setLoading(true);
-      const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        const { data } = await supabase.from("profiles").select("*").eq("id", session.user.id).maybeSingle();
-        setProfile(data);
+      try {
+        // 1. Ambil Session User
+        const { data: { session } } = await supabase.auth.getSession();
+        if (ignore) return;
+        setUser(session?.user ?? null);
+        
+        // 2. Ambil Profile User (Jika sudah login)
+        if (session?.user) {
+          const { data } = await supabase.from("profiles").select("*").eq("id", session.user.id).maybeSingle();
+          if (ignore) return;
+          setProfile(data);
+        }
+        
+        // 3. Ambil List Email Developer
+        const { data: devs } = await supabase.from("profiles").select("email").eq("role", "developer");
+        if (ignore) return;
+        if (devs) setDeveloperEmails(devs.map((d) => d.email));
+        
+        // 4. Ambil History Chat
+        const { data: msgs } = await supabase.from("messages").select("*").order("created_at", { ascending: true });
+        if (ignore) return;
+        if (msgs) setMessages(msgs);
+        
+        // 5. Setup Realtime Channel (Hanya dibuat jika render ini masih valid)
+        const chatChannel = supabase.channel("public-chat")
+          .on(
+            "postgres_changes",
+            { event: "INSERT", schema: "public", table: "messages" },
+            (payload) => {
+              setMessages((prev) => {
+                if (prev.some((msg) => msg.id === payload.new.id)) return prev;
+                return [...prev, payload.new];
+              });
+            }
+          );
+
+        chatChannel.subscribe((status) => {
+          if (status === "SUBSCRIBED" && !ignore) {
+            channel = chatChannel;
+          }
+        });
+
+      } catch (error) {
+        console.error("Gagal memuat data:", error);
+      } finally {
+        if (!ignore) setLoading(false);
       }
-      const { data: devs } = await supabase.from("profiles").select("email").eq("role", "developer");
-      if (devs) setDeveloperEmails(devs.map((d) => d.email));
-      const { data: msgs } = await supabase.from("messages").select("*").order("created_at", { ascending: true });
-      if (msgs) setMessages(msgs);
-      
-      channel = supabase.channel("public-chat")
-        .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages" }, (payload) => {
-          setMessages((prev) => [...prev, payload.new]);
-        })
-        .subscribe();
-      
-      setLoading(false);
     };
     
     initialize();
-    return () => { if (channel) supabase.removeChannel(channel); };
+
+    // Fungsi Pembersihan (Cleanup): Dipanggil secara instan oleh StrictMode saat re-render
+    return () => {
+      ignore = true; // Batalkan semua proses state update dari fetch yang sedang berjalan
+      if (channel) {
+        supabase.removeChannel(channel);
+      }
+    };
   }, []);
 
   const handleLogout = async () => {
