@@ -39,13 +39,26 @@ export default function App() {
   }, [])
 
   return (
-    <div className="h-full w-full overflow-hidden relative select-none bg-[#fafafa] dark:bg-[#0a0a0c] transition-colors duration-500">
+    <div className="min-h-screen w-full overflow-x-hidden relative select-none bg-[#fafafa] dark:bg-[#0c0c0e] transition-colors duration-500">
+      
+      {/* 🌌 GLOBAL PIXEL GRID BACKGROUND LAYER (Ditaruh di sini biar statis) */}
+      <div 
+        className="absolute inset-0 pointer-events-none select-none z-0 opacity-[0.4] dark:opacity-[0.25]"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(99, 102, 241, 0.08) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(99, 102, 241, 0.08) 1px, transparent 1px)
+          `,
+          backgroundSize: '32px 32px'
+        }} 
+      />
+
       <AnimatePresence mode="wait">
         {isLoading && <SplashScreen finishLoading={() => setIsLoading(false)} />}
       </AnimatePresence>
 
       {!isLoading && (
-        <>
+        <div className="relative z-10 w-full flex flex-col">
           <CustomCursor />
           
           <Navbar isDark={isDark} toggleDark={() => setIsDark(!isDark)} />
@@ -66,7 +79,7 @@ export default function App() {
             <ScrollReveal><ContactSection /></ScrollReveal>
             <Footer />
           </Suspense>
-        </>
+        </div>
       )}
     </div>
   )

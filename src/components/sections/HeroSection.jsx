@@ -15,12 +15,12 @@ function HeroSkeleton() {
         <div className="h-10 bg-zinc-300 dark:bg-zinc-800 border-4 border-zinc-950 dark:border-zinc-800 w-48 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]" />
       </div>
 
-      <div className="relative w-full flex items-center justify-center my-auto py-12">
-        <motion.div 
-          animate={{ opacity: [0.2, 0.6, 0.2] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "linear", delay: 0.2 }}
-          className="w-48 h-48 bg-zinc-200 dark:bg-zinc-800 border-4 border-zinc-950 dark:border-zinc-800 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]" 
-        />
+      <div className="relative w-full flex items-center justify-center my-auto z-10 py-12">
+        <div className="w-96 h-96 border-4 border-dashed border-zinc-300 dark:border-zinc-800 bg-zinc-100/50 dark:bg-zinc-900/30 flex items-center justify-center relative shadow-[6px_6px_0px_0px_rgba(0,0,0,0.05)]">
+          <div className="absolute top-[55.5%] left-[36.6%] w-4 h-4 bg-zinc-300 dark:bg-zinc-700 animate-pulse" />
+          <div className="absolute top-[55.5%] left-[54.8%] w-4 h-4 bg-zinc-300 dark:bg-zinc-700 animate-pulse" />
+          <span className="font-mono text-[10px] text-zinc-400 dark:text-zinc-600 font-bold uppercase tracking-widest">LOADING_CORE...</span>
+        </div>
       </div>
 
       <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t-2 border-dashed border-zinc-200 dark:border-zinc-800/40 pt-6">
