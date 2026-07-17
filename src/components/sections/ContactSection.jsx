@@ -98,119 +98,90 @@ export default function ContactSection() {
   }, [messages, loading]);
 
   useEffect(() => {
-
     let channel = null;
 
     let ignore = false;
 
     const initialize = async () => {
-
       setLoading(true);
 
       try {
-
-        const { data: { session } } = await supabase.auth.getSession();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
         if (ignore) return;
 
         setUser(session?.user ?? null);
 
-       
-
         if (session?.user) {
-
-          const { data } = await supabase.from("profiles").select("*").eq("id", session.user.id).maybeSingle();
+          const { data } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("id", session.user.id)
+            .maybeSingle();
 
           if (ignore) return;
 
           setProfile(data);
-
         }
 
-       
-
-        const { data: devs } = await supabase.from("profiles").select("email").eq("role", "developer");
+        const { data: devs } = await supabase
+          .from("profiles")
+          .select("email")
+          .eq("role", "developer");
 
         if (ignore) return;
 
         if (devs) setDeveloperEmails(devs.map((d) => d.email));
 
-       
-
-        const { data: msgs } = await supabase.from("messages").select("*").order("created_at", { ascending: true });
+        const { data: msgs } = await supabase
+          .from("messages")
+          .select("*")
+          .order("created_at", { ascending: true });
 
         if (ignore) return;
 
         if (msgs) setMessages(msgs);
 
-       
-
-        const chatChannel = supabase.channel("public-chat")
+        const chatChannel = supabase
+          .channel("public-chat")
 
           .on(
-
             "postgres_changes",
 
             { event: "INSERT", schema: "public", table: "messages" },
 
             (payload) => {
-
               setMessages((prev) => {
-
                 if (prev.some((msg) => msg.id === payload.new.id)) return prev;
 
                 return [...prev, payload.new];
-
               });
-
-            }
-
+            },
           );
 
-
-
         chatChannel.subscribe((status) => {
-
           if (status === "SUBSCRIBED" && !ignore) {
-
             channel = chatChannel;
-
           }
-
         });
-
-
-
       } catch (error) {
-
         console.error("Gagal memuat data:", error);
-
       } finally {
-
         if (!ignore) setLoading(false);
-
       }
-
     };
-
-   
 
     initialize();
 
-
-
     return () => {
-
       ignore = true;
 
       if (channel) {
-
         supabase.removeChannel(channel);
-
       }
-
     };
-
   }, []);
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -344,7 +315,7 @@ export default function ContactSection() {
                 {messages.map((m) => {
                   const mine = user?.email === m.user_email;
                   const dev =
-                    m.user_email === "abdullahramadan.e@gmail.com" ||
+                    m.user_email === "abdullahramadanelansary@gmail.com" ||
                     developerEmails.includes(m.user_email);
 
                   return (

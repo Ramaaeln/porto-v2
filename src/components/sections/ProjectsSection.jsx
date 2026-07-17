@@ -43,12 +43,12 @@ export default function ProjectsSection() {
       github: 'https://github.com/Ramaaeln/TAXCUNPAM'
     },
     {
-      title: 'SAPABUARAN',
-      desc: 'A community reporting ecosystem for South Tangerang residents built with a multi-role mobile architecture and real-time Firebase push notifications.',
-      tags: ['Flutter', 'React', 'Firebase', 'Supabase'],
-      image: '/projects/sapabuaran.png',
-      link: 'https://buaran.vercel.app/',
-      github: 'https://github.com/Ramaaeln/buaran'
+      title: 'SUPLIER DESA',
+      desc: 'A commercial B2B supply chain management dashboard equipped with interactive data visualization and sales analytics charts for administrators.',
+      tags: ['React', 'TailwindCSS', 'Supabase'],
+      image: '/projects/suplier.png',
+      link: 'https://suplier-desa.vercel.app/',
+      github: null
     },
     {
       title: 'FANNIA ENTERTAINMENT',
@@ -59,21 +59,22 @@ export default function ProjectsSection() {
       github: 'https://github.com/Ramaaeln/fannia-entertaiment'
     },
     {
+      title: 'SAPABUARAN',
+      desc: 'A community reporting ecosystem for South Tangerang residents built with a multi-role mobile architecture and real-time Firebase push notifications.',
+      tags: ['Flutter', 'React', 'Firebase', 'Supabase'],
+      image: '/projects/sapabuaran.png',
+      link: 'https://buaran.vercel.app/',
+      github: 'https://github.com/Ramaaeln/buaran'
+    },
+    {
       title: 'WAROENG EDUL',
       desc: 'An end-to-end full-stack e-commerce and food ordering system selected as the Best Project at Talentclass Batch 17.',
       tags: ['React', 'Express', 'Node.js'],
       image: '/projects/waroeng.jpeg',
       link: 'https://waroeng-dul.vercel.app/',
       github: 'https://github.com/Ramaaeln/waroeng-dul'
-    },
-    {
-      title: 'SUPLIER DESA',
-      desc: 'A commercial B2B supply chain management dashboard equipped with interactive data visualization and sales analytics charts for administrators.',
-      tags: ['React', 'TailwindCSS', 'Supabase'],
-      image: '/projects/suplier.png',
-      link: 'https://suplier-desa.vercel.app/',
-      github: null
     }
+    
   ]
 
   const activeProject = projects[selectedIdx]
