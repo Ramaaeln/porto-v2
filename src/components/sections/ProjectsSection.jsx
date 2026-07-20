@@ -39,7 +39,7 @@ export default function ProjectsSection() {
       desc: 'A robust examination and certification system featuring an advanced anti-cheating mechanism driven by real-time window and activity listeners.',
       tags: ['React', 'TailwindCSS', 'Express', 'Supabase'],
       image: '/projects/TAXCENTER.png',
-      link: 'https://taxcunpam.vercel.app/',
+      link: 'https://utcbt.vercel.app',
       github: 'https://github.com/Ramaaeln/TAXCUNPAM'
     },
     {
